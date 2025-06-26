@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "433385556397",
+    "project_id": "newstapri-9ad1c",
+    "storage_bucket": "newstapri-9ad1c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:433385556397:android:a60273efb9ab7837427924",
+        "android_client_info": {
+          "package_name": "com.newstapri"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "433385556397-481ue2h1dl9n0dr0bk3pic5qieia30fn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.newstapri",
+            "certificate_hash": "1c9996893809e10a9c972297f639f91425d2089b"
+          }
+        },
+        {
+          "client_id": "433385556397-9nhqv2g75dtpv11tf8tqkf41n2jb2vso.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDoWW2gaDgouj6G23FlDon5G25VCLm_7c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "433385556397-9nhqv2g75dtpv11tf8tqkf41n2jb2vso.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
