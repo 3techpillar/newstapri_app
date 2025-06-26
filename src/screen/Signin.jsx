@@ -93,13 +93,13 @@ const Signin = () => {
                 />
 
                 <TouchableOpacity style={styles.button} onPress={handleLogin}>
-                    <Text style={styles.buttonText}>Signin</Text>
+                    <Text style={styles.buttonText}>Sign in</Text>
                 </TouchableOpacity>
 
                 <View style={styles.loginContainer}>
                     <Text style={styles.loginText}>New user?</Text>
                     <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
-                        <Text style={styles.loginLink}>Sign in</Text>
+                        <Text style={styles.loginLink}>Sign up</Text>
                     </TouchableOpacity>
                 </View>
                 <GoogleLogin />
@@ -120,14 +120,14 @@ const styles = StyleSheet.create({
     form: {
         width: '85%',
         backgroundColor: '#ffffff',
-        padding: 20,
+        padding: 30,
         borderRadius: 20,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.2,
         shadowRadius: 5,
         elevation: 5,
-        gap: 14,
+        gap: 15,
     },
     label: {
         fontSize: 16,
@@ -160,7 +160,6 @@ const styles = StyleSheet.create({
     loginContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
-        marginTop: 16,
     },
     loginText: {
         color: '#444',

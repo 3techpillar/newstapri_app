@@ -1,73 +1,102 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TouchableOpacity, Alert,StyleSheet } from 'react-native';
+import { GoogleSignin, statusCodes, GoogleLogoButton, } from '@react-native-google-signin/google-signin';
+import axios from 'axios';
 import { baseUrl } from '../../utils/apiCofig';
 import useAuthStore from '../../store/useAuthStore';
 import { useNavigation } from '@react-navigation/native';
-import axios from 'axios';
+import Toast from 'react-native-toast-message';
 
-GoogleSignin.configure({
-	webClientId: '433385556397-9nhqv2g75dtpv11tf8tqkf41n2jb2vso.apps.googleusercontent.com',
-	offlineAccess: true,
-	scopes: ['profile', 'email'],
-});
+
+const WEB_CLIENT_ID = '433385556397-9nhqv2g75dtpv11tf8tqkf41n2jb2vso.apps.googleusercontent.com';
 
 export default function GoogleLogin() {
-	const [error, setError] = useState('');
-	const { login } = useAuthStore.getState()
-	const navigation = useNavigation();
+  const [gmail, setGmail] = useState(null);
+  const [error, setError] = useState('');
+  const { login } = useAuthStore();
+  const navigation = useNavigation();
 
-	const handleGoogleLogin = async () => {
-  try {
-    await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-    await GoogleSignin.signOut(); 
-    const userInfo = await GoogleSignin.signIn();
+  useEffect(() => {
+    configureGoogleSign();
+  }, []);
 
-    console.log("Full userInfo:", userInfo);
-    console.log("idtoken",userInfo.data.idToken)
+  function configureGoogleSign() {
+    GoogleSignin.configure({
+      webClientId: WEB_CLIENT_ID,
+      offlineAccess: false,
+      scopes: ['profile', 'email'],
+    });
+  }
 
+  const signIn = async () => {
+    try {
+      await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+      await GoogleSignin.signOut();
+      const userInfo = await GoogleSignin.signIn();
+      setGmail(userInfo);
+      const GoogleidToken = userInfo.data.idToken;
    
-
-    if (userInfo.data.idToken) {
-      const res = await axios.post(
-        `${baseUrl}/v1/auth/google`,
-        {
-          name: userInfo.data.name,
-          email: userInfo.data.email,
-          googlePhotoUrl: userInfo.data.photo,
-        },
-        {
-          headers: { 'Content-Type': 'application/json' },
-        }
-      );
-
+      const res = await axios.post(`${baseUrl}/v1/auth/google`, {
+        name: userInfo?.user?.name || userInfo?.data?.user?.name,
+        email: userInfo?.user?.email || userInfo?.data?.user?.email,
+        googlePhotoUrl: userInfo?.user?.photo || userInfo?.data?.user?.photo,
+      });
+      console.log("res",res)
+      
       const data = res.data;
-      console.log("Response data", data);
-
       const { token, ...user } = data;
       login(user, token);
 
       navigation.navigate("MyTabs", {
         screen: "Home",
-        initial: true,
+        initial: true
       });
+
+    } catch (error) {
+      console.log('Google SignIn Error:', error.code || '', error.message || error);
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        Toast.show({
+          type:"error",
+          text1:'Google sign-in was cancelled.'
+        })
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        Toast.show({
+          type:"error",
+          text1:'Google sign-in is already in progress.'
+        })
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+         Toast.show({
+          type:"error",
+          text1:'Google Play Services not available or outdated'
+        })
+      } else {
+        setError(error.message || 'Something went wrong.');
+      }
     }
-  } catch (e) {
-    console.log('Google Signin Error:', e.code, e.message);
-    setError(e.message);
-  }
-};
+  };
 
-
-
-	return (
-		<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-			<TouchableOpacity
-				onPress={handleGoogleLogin}
-				style={{ backgroundColor: '#4285F4', padding: 15, borderRadius: 8 }}
-			>
-				<Text style={{ color: '#fff' }}>Sign in with Google</Text>
-			</TouchableOpacity>
-		</View>
-	);
+  return (
+      <TouchableOpacity
+        onPress={signIn}
+        style={styles.Gbutton}
+      >
+        <Text style={styles.GbuttonText}>Sign in with Google</Text>
+      </TouchableOpacity>
+  );
 }
+
+const styles = StyleSheet.create({
+  Gbutton: {
+    backgroundColor: '#4285F4',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    elevation: 3,
+    alignItems: 'center',
+  },
+  GbuttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+});

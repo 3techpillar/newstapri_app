@@ -125,16 +125,13 @@ const Signup = () => {
           </TouchableOpacity>
 
           <View style={styles.loginContainer}>
+         
             <Text style={styles.loginText}>Already have an account?</Text>
             <TouchableOpacity onPress={() => navigation.navigate('Signin')}>
               <Text style={styles.loginLink}> Log In</Text>
             </TouchableOpacity>
           </View>
           <GoogleLogin />
-
-
-
-
         </View>
       </SafeAreaView>
     </>
@@ -151,19 +148,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   form: {
-    width: '85%',
+    width: '90%',
     backgroundColor: '#ffffff',
-    padding: 20,
+    padding: 24,
     borderRadius: 20,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.1,
     shadowRadius: 5,
-    elevation: 5,
+    elevation: 4,
     gap: 14,
   },
   label: {
-    fontSize: 16,
+    fontSize: 15.5,
     fontWeight: '600',
     color: '#3a3a3a',
     marginBottom: 4,
@@ -175,7 +172,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 1.5,
     borderColor: '#aad3f2',
-    fontSize: 16,
+    fontSize: 15.5,
     color: '#333',
   },
   button: {
@@ -203,5 +200,7 @@ const styles = StyleSheet.create({
     color: '#2e86de',
     fontWeight: '600',
     fontSize: 14,
+    marginLeft: 4,
   },
 });
+
