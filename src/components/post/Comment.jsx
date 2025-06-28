@@ -4,11 +4,9 @@ import {
     StyleSheet,
     Text,
     View,
-    FlatList,
     TextInput,
     TouchableOpacity,
-    KeyboardAvoidingView,
-    Platform,
+   
 } from 'react-native';
 import { baseUrl } from '../../utils/apiCofig';
 import useAuthStore from '../../store/useAuthStore';
@@ -20,6 +18,10 @@ const Comment = ({ postId }) => {
 
     const [comments, setComments] = useState([]);
     const [input, setInput] = useState('');
+
+ 
+
+
 
     useEffect(() => {
         fetchComments();
@@ -94,7 +96,7 @@ const Comment = ({ postId }) => {
                             </View>
                             <View style={styles.commentContent}>
                                 <View style={styles.commentUser}>
-                                <Text style={styles.userName}>{item.user?.name || 'Unknown'}</Text>
+                                <Text style={styles.userName}>{item.user.username}</Text>
                                 <Text style={styles.timestamp}>{formatTimeAgo(item.createdAt)}</Text>
                                 </View>
                                 <Text style={styles.commentText}>{item.content}</Text>
@@ -116,8 +118,8 @@ export default Comment;
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#fff',
-        paddingHorizontal: 16,
-        paddingTop: 16,
+        paddingHorizontal: 12,
+        paddingTop: 12,
     },
     commentBox: {
         backgroundColor: '#f2f2f2',
@@ -126,7 +128,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     commentText: {
-        fontSize: 16,
+        fontSize: 12,
         color: '#333',
     },
     inputContainer: {
@@ -164,10 +166,10 @@ const styles = StyleSheet.create({
 },
 
 profileCircle: {
-    width: 40,
-    height: 40,
+    width: 25,
+    height: 30,
     borderRadius: 20,
-    backgroundColor: '#007bff',
+    backgroundColor: 'gray',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 12,

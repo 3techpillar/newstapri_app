@@ -10,8 +10,12 @@ import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import useAuthStore from '../../store/useAuthStore';
 import Comment from '../post/Comment';
+import { getApp } from '@react-native-firebase/app';
+import { getAnalytics, logEvent, logLogin } from '@react-native-firebase/analytics';
 
 const { width } = Dimensions.get('window');
+
+
 
 
 
@@ -31,6 +35,27 @@ const NewsDetail = ({ route }) => {
     useEffect(() => {
         useAuthStore.getState().loadUserFromStorage();
     }, []);
+
+    useEffect(() => {
+        const sendTestEvent = async () => {
+            try {
+                const app = getApp();
+                const analytics = getAnalytics(app);
+
+                await logEvent(analytics, 'News_clicked', {
+                    status: 'Clicked',
+                    timestamp: Date.now(),
+                    news:newsSlug.slice(0,50)
+                });
+              
+            } catch (error) {
+                console.log('❌ Error logging event', error);
+            }
+        };
+
+        sendTestEvent();
+    }, [newsSlug]);
+
 
     const fetchNewsBySlug = async () => {
         try {

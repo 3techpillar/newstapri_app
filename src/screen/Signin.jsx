@@ -7,6 +7,8 @@ import useAuthStore from '../store/useAuthStore'
 import axios from 'axios'
 import GoogleLogin from '../components/googleAuth/GoogleLogin'
 import Toast from 'react-native-toast-message'
+import Header from '../components/Header'
+
 
 const Signin = () => {
     const [email, setemail] = useState('')
@@ -69,6 +71,8 @@ const Signin = () => {
 
 
     return (
+        <>
+        <Header />
         <SafeAreaView style={styles.container}>
             <View style={styles.form}>
                 <Text style={styles.label}>Email</Text>
@@ -105,6 +109,7 @@ const Signin = () => {
                 <GoogleLogin />
             </View>
         </SafeAreaView>
+        </>
     )
 }
 
@@ -118,8 +123,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     form: {
-        width: '85%',
-        backgroundColor: '#ffffff',
+        width: '90%',
+        backgroundColor: '#f8f896',
         padding: 30,
         borderRadius: 20,
         shadowColor: '#000',

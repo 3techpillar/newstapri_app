@@ -4,6 +4,10 @@ import { baseUrl } from '../../utils/apiCofig';
 import { ScrollView, Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Card } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
+ 
+
+
+
 
 
 
@@ -19,6 +23,8 @@ const Posts = () => {
         fetchPosts();
 
     }, [])
+
+
 
     const fetchPosts = async () => {
         try {
@@ -51,6 +57,12 @@ const Posts = () => {
         }
 
     }
+    const handlePost = async (slug) => {
+        navigation.navigate('NewsDetail', { newsSlug: slug });
+    };
+
+  
+
 
 
     return (
@@ -74,7 +86,7 @@ const Posts = () => {
                                 )}
                                 <TouchableOpacity
                                     style={{ flex: 1 }}
-                                    onPress={() => navigation.navigate('NewsDetail', { newsSlug: post.slug })}
+                                    onPress={() => handlePost(post.slug)}
                                 >
                                     <View style={styles.textContainer}>
                                         <Text
@@ -154,7 +166,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12,
         paddingVertical: 8,
         borderRadius: 6,
-        marginVertical:10
+        marginVertical: 10
 
     },
     horizontalLine: {

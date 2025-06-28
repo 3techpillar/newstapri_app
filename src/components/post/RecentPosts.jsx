@@ -27,7 +27,8 @@ const RecentPosts = () => {
         }
     };
     const handlepress=()=>{
-         setIndex(2+index);
+       
+         setIndex(index+2);
          fetchRecentNews()
 
 
