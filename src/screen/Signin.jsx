@@ -1,5 +1,5 @@
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useNavigation } from '@react-navigation/native'
 import { baseUrl } from '../utils/apiCofig'
@@ -8,14 +8,23 @@ import axios from 'axios'
 import GoogleLogin from '../components/googleAuth/GoogleLogin'
 import Toast from 'react-native-toast-message'
 import Header from '../components/Header'
+import { getMessaging, getToken } from '@react-native-firebase/messaging';
+import { getApp } from '@react-native-firebase/app'
 
 
 const Signin = () => {
     const [email, setemail] = useState('')
     const [password, setPassword] = useState('')
+    const [fcmToken, setfcmToken] = useState(null)
     const { login } = useAuthStore.getState()
+    const messaging = getMessaging(getApp());
 
     const navigation = useNavigation();
+
+    useEffect(() => {
+        console.log("This is my fcm token", fcmToken)
+    }, [fcmToken])
+
 
     const validateEmail = (value) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -55,6 +64,9 @@ const Signin = () => {
                 index: 0,
                 routes: [{ name: 'MyTabs' }],
             });
+            const fcm = await getToken(messaging);
+            setfcmToken(fcm);
+
 
         } catch (error) {
             Toast.show({
@@ -72,43 +84,43 @@ const Signin = () => {
 
     return (
         <>
-        <Header />
-        <SafeAreaView style={styles.container}>
-            <View style={styles.form}>
-                <Text style={styles.label}>Email</Text>
-                <TextInput
-                    placeholder="Enter your email.."
-                    autoCorrect={false}
-                    value={email}
-                    onChangeText={setemail}
-                    style={styles.input}
-                    placeholderTextColor="#999"
-                    keyboardType="email-address"
-                />
-                <Text style={styles.label}>Password</Text>
-                <TextInput
-                    placeholder="Enter your password.."
-                    autoCorrect={false}
-                    secureTextEntry
-                    value={password}
-                    onChangeText={setPassword}
-                    style={styles.input}
-                    placeholderTextColor="#999"
-                />
+            <Header />
+            <SafeAreaView style={styles.container}>
+                <View style={styles.form}>
+                    <Text style={styles.label}>Email</Text>
+                    <TextInput
+                        placeholder="Enter your email.."
+                        autoCorrect={false}
+                        value={email}
+                        onChangeText={setemail}
+                        style={styles.input}
+                        placeholderTextColor="#999"
+                        keyboardType="email-address"
+                    />
+                    <Text style={styles.label}>Password</Text>
+                    <TextInput
+                        placeholder="Enter your password.."
+                        autoCorrect={false}
+                        secureTextEntry
+                        value={password}
+                        onChangeText={setPassword}
+                        style={styles.input}
+                        placeholderTextColor="#999"
+                    />
 
-                <TouchableOpacity style={styles.button} onPress={handleLogin}>
-                    <Text style={styles.buttonText}>Sign in</Text>
-                </TouchableOpacity>
-
-                <View style={styles.loginContainer}>
-                    <Text style={styles.loginText}>New user?</Text>
-                    <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
-                        <Text style={styles.loginLink}>Sign up</Text>
+                    <TouchableOpacity style={styles.button} onPress={handleLogin}>
+                        <Text style={styles.buttonText}>Sign in</Text>
                     </TouchableOpacity>
+
+                    <View style={styles.loginContainer}>
+                        <Text style={styles.loginText}>New user?</Text>
+                        <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
+                            <Text style={styles.loginLink}>Sign up</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <GoogleLogin />
                 </View>
-                <GoogleLogin />
-            </View>
-        </SafeAreaView>
+            </SafeAreaView>
         </>
     )
 }
