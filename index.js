@@ -11,8 +11,8 @@ import { getApp } from '@react-native-firebase/app';
 
 const messaging = getMessaging(getApp());
 
-setBackgroundMessageHandler(messaging, async remoteMessage => {
-  console.log('Message handled in the background!', remoteMessage);
+getMessaging().setBackgroundMessageHandler(async remoteMessage => {
+  console.log('📥 Message in background:', remoteMessage);
 });
 
 AppRegistry.registerComponent(appName, () => App);

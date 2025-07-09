@@ -1,25 +1,24 @@
-import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Alert, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import MenuIcon from 'react-native-vector-icons/Feather';
 import { useState } from 'react';
 
-
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 const Header = () => {
   const navigation = useNavigation();
-  const [open, setopen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   const handleAbout = () => {
-    navigation.navigate('About')
-    setopen(false)
-  }
+    navigation.navigate('About');
+    setOpen(false);
+  };
 
   const handleContact = () => {
-    navigation.navigate('Contact')
-    setopen(false);
-  }
+    navigation.navigate('Contact');
+    setOpen(false);
+  };
 
   const handleClick = () => {
     navigation.reset({
@@ -30,18 +29,17 @@ const Header = () => {
 
   return (
     <>
-    <SafeAreaView style={styles.container}>
-      <View style={styles.left}>
-        <TouchableOpacity onPress={handleClick}>
+      <SafeAreaView style={styles.container}>
+        <TouchableOpacity style={styles.left} onPress={handleClick}>
           <Image source={require('../assets/logo.png')} style={styles.logo} />
+          
         </TouchableOpacity>
-      </View>
 
-      <TouchableOpacity onPress={() => setopen(!open)}>
-        <MenuIcon name="menu" size={25} color="black" />
-      </TouchableOpacity>
+        <TouchableOpacity onPress={() => setOpen(!open)}>
+          <MenuIcon name="menu" size={28} color="black" />
+        </TouchableOpacity>
+      </SafeAreaView>
 
-    </SafeAreaView>
       {open && (
         <View style={styles.menuContainer}>
           <TouchableOpacity onPress={handleAbout}>
@@ -54,41 +52,58 @@ const Header = () => {
       )}
     </>
   );
-}
+};
+
 export default Header;
 
 const styles = StyleSheet.create({
   container: {
-    position: "relative",
+ backgroundColor: '#f0f0f0',
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 16,
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    height: 60,
+    width: '100%',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    elevation: 4, 
+    shadowColor: '#000', 
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    
   },
   left: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   logo: {
-    
     width: 80,
-    height: 40,
+    height: 45,
     resizeMode: 'contain',
+    marginRight: 8,
+    
   },
+  
   menuContainer: {
-    position: "absolute",
+    position: 'absolute',
     top: 50,
-    right: 20,
-    zIndex: 9999,
-    width: 100,
-    marginTop: 10,
-    backgroundColor: '#f2f2f2',
-    padding: 10,
-    borderRadius: 6,
-    elevation: 3,
+    right: 16,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
+    elevation: 5,
+    zIndex: 999,
   },
   menuItem: {
     fontSize: 16,
     paddingVertical: 8,
+    color: '#333',
   },
 });

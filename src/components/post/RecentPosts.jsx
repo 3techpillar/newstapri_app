@@ -16,7 +16,7 @@ const RecentPosts = () => {
 
     useEffect(() => {
         fetchRecentNews();
-    }, []);
+    }, [index]);
 
     const fetchRecentNews = async () => {
         try {
@@ -27,12 +27,8 @@ const RecentPosts = () => {
         }
     };
     const handlepress=()=>{
-       
-         setIndex(index+2);
+        setIndex(index+2)
          fetchRecentNews()
-
-
-
     }
 
     return (

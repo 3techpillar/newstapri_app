@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Alert,StyleSheet } from 'react-native';
-import { GoogleSignin, statusCodes, GoogleLogoButton, } from '@react-native-google-signin/google-signin';
+import { Text, TouchableOpacity,StyleSheet } from 'react-native';
+import { GoogleSignin, statusCodes, GoogleLogoButton,GoogleSigninButton } from '@react-native-google-signin/google-signin';
 import axios from 'axios';
 import { baseUrl } from '../../utils/apiCofig';
 import useAuthStore from '../../store/useAuthStore';
 import { useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
+
 
 
 const WEB_CLIENT_ID = '433385556397-9nhqv2g75dtpv11tf8tqkf41n2jb2vso.apps.googleusercontent.com';
@@ -80,22 +81,20 @@ export default function GoogleLogin() {
         onPress={signIn}
         style={styles.Gbutton}
       >
-        <Text style={styles.GbuttonText}>Sign in with Google</Text>
+       <GoogleSigninButton label="Sign in with Google"  />
       </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   Gbutton: {
-    backgroundColor: '#4285F4',
+ 
     paddingVertical: 12,
     paddingHorizontal: 20,
     borderRadius: 8,
-    elevation: 3,
     alignItems: 'center',
   },
   GbuttonText: {
-    color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
   },

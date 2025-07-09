@@ -7,10 +7,13 @@ import useAuthStore from '../store/useAuthStore'
 import { useNavigation } from '@react-navigation/native'
 import Toast from 'react-native-toast-message'
 
+
+
 const Quiz = () => {
   const [activeQuiz, setActiveQuiz] = useState({})
   const [HasPlayed, setHasPlayed] = useState(false)
 
+  
 
   const user = useAuthStore((state) => state.user);
   const userId = user?._id;
@@ -18,81 +21,66 @@ const Quiz = () => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const navigation = useNavigation();
 
-  const fetchActiveQuiz = async () => {
-    try {
-      const res = await axios.get(`${baseUrl}/v1/quizzes/active-quizzes`)
-      const data = res.data;
-      setActiveQuiz(data.quizzes);
-    } catch (error) {
-      console.log("Internal server error", error)
-    }
-  }
-
   useEffect(() => {
-    fetchActiveQuiz()
+    const fetchActiveQuiz = async () => {
+      try {
+        const res = await axios.get(`${baseUrl}/v1/quizzes/active-quizzes`)
+        const data = res.data;
+        setActiveQuiz(data.quizzes);
+      } catch (error) {
+        console.log("Internal server error", error)
+      }
+    }
 
+    fetchActiveQuiz()
   }, [])
 
+  
+
+  
+
   const fetchPlayedUser = async (quizId) => {
-  try {
-    const response = await axios.get(`${baseUrl}/v1/quizzes/played-user/${userId}/${quizId}`);
-    const data = response.data;
+    console.log(userId,quizId)
+    
+    try {
+      const response = await axios.get(`${baseUrl}/v1/quizzes/played-user/${userId}/${quizId}`);
+      const data = response.data;
+      const alreadyPlayed = data.message === "You already played this quiz";
+      setHasPlayed(alreadyPlayed);
 
-    const alreadyPlayed = data.message === "You already played this quiz";
-    setHasPlayed(alreadyPlayed);
+      if (alreadyPlayed) {
+        Toast.show({
+          type: 'error',
+          text1: 'You have already played this quiz.',
+          text2: 'Try the next one!'
+        });
+        return;
+      }
 
-    if (alreadyPlayed) {
-      Toast.show({
-        type: 'error',
-        text1: 'You have already played this quiz.',
-        text2: 'Try the next one!'
-      });
-      return;
+      navigation.navigate("ActiveQuiz", { QuizAnswer: activeQuiz });
+
+    } catch (error) {
+      const status = error?.response?.status;
+      const message = error?.response?.data?.message;
+
+      if (status === 400 && message === "You already played this quiz") {
+        setHasPlayed(true);
+        Toast.show({
+          type: 'error',
+          text1: 'You have already played this quiz.',
+          text2: 'Try the next one!'
+        });
+      } else {
+
+        Toast.show({
+          type: 'error',
+          text1: ' Login to play',
+
+        });
+        navigation.navigate('Signup')
+      }
     }
-
-    navigation.navigate("ActiveQuiz", { QuizAnswer: activeQuiz });
-
-  } catch (error) {
-    const status = error?.response?.status;
-    const message = error?.response?.data?.message;
-
-    if (status === 400 && message === "You already played this quiz") {
-      setHasPlayed(true);
-      Toast.show({
-        type: 'error',
-        text1: 'You have already played this quiz.',
-        text2: 'Try the next one!'
-      });
-    } else {
-      
-      Toast.show({
-        type: 'error',
-        text1: ' Login to play',
-        
-      });
-      navigation.navigate('Signup')
-    }
-  }
-};
-
-
-
-
-  // const handleQuiz = (id) => {
-
-
-  // }
-
-  //   if (!isAuthenticated) {
-  //     navigation.navigate("Signup")
-  //   } else {
-  //     navigation.navigate("ActiveQuiz", { QuizAnswer: activeQuiz })
-  //   }
-
-
-
-  // }
-
+  };
 
   return (
     <>
@@ -103,7 +91,7 @@ const Quiz = () => {
 
         <View style={styles.grid}>
           {activeQuiz && activeQuiz.name ? (
-            <TouchableOpacity style={styles.card} onPress={() => fetchPlayedUser(activeQuiz._id)}>
+            <TouchableOpacity style={styles.card} onPress={()=>fetchPlayedUser(activeQuiz._id)}>
               <Image source={{ uri: activeQuiz.banner }} style={styles.cardImage} />
               <Text style={styles.cardTitle}>{activeQuiz.name}</Text>
               <Text style={styles.cardDesc} numberOfLines={2}>{activeQuiz.description}</Text>
@@ -122,9 +110,10 @@ export default Quiz;
 
 const styles = StyleSheet.create({
   container: {
-    padding: 12,
+    padding: 10,
     backgroundColor: '#f6f6f6',
     flex: 1,
+    marginTop: 40
   },
   heading: {
     fontSize: 19,

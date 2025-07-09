@@ -214,6 +214,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
+        paddingTop:45,
         backgroundColor: '#f4f6fc',
     },
     title: {
@@ -221,6 +222,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#000',
         marginBottom: 20,
+        textAlign:"center"
     },
     cardContainer: {
         flexDirection: 'row',

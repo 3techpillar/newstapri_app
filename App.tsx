@@ -20,6 +20,7 @@ import Wallet from './src/ProfilePage/Wallet';
 import About from './src/screen/About';
 import Contact from './src/screen/Contact';
 
+
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -65,6 +66,7 @@ const MyTabs = () => {
 const App = () => {
   return (
     <>
+   
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="MyTabs" component={MyTabs} options={{ headerShown: false }} />

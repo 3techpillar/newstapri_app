@@ -1,25 +1,45 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
-import React, { useState } from 'react';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Platform } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '../components/Header';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { baseUrl } from '../utils/apiCofig';
 import useAuthStore from '../store/useAuthStore';
 import { useNavigation } from '@react-navigation/native';
 import GoogleLogin from '../components/googleAuth/GoogleLogin';
 import Toast from 'react-native-toast-message';
 
+import { getApp } from '@react-native-firebase/app';
+import { getMessaging } from '@react-native-firebase/messaging';
+
 const Signup = () => {
   const [name, setname] = useState('');
   const [email, setemail] = useState('');
   const [password, setPassword] = useState('');
+
+  const [fcmToken, setfcmToken] = useState('')
   const { login } = useAuthStore.getState()
   const navigation = useNavigation();
+  const platform = Platform.OS
+
+  const app = getApp();
+  const messaging = getMessaging(app);
 
   const validateEmail = (value) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(value);
   };
+
+  useEffect(() => {
+    token()
+  }, [fcmToken])
+
+  const token = async () => {
+    const token = await messaging.getToken();
+    console.log("fcm token for device is", token)
+    setfcmToken(token)
+
+  }
 
   const handleRegister = async () => {
     if (!name || !email || !password) {
@@ -39,19 +59,19 @@ const Signup = () => {
 
       return;
     }
-    if(name.length<3){
+    if (name.length < 3) {
       Toast.show({
         type: 'error',
         text1: 'Name should be more than 3 character ',
-         
+
       });
       return;
 
     }
-    if(password.length<4){
+    if (password.length < 4) {
       Toast.show({
-        type:"error",
-        text1:"password must be greater than 5 character and contain symobls"
+        type: "error",
+        text1: "password must be greater than 5 character and contain symobls"
       })
     }
 
@@ -59,26 +79,30 @@ const Signup = () => {
       const res = await axios.post(`${baseUrl}/v1/auth/signup`, {
         username: name,
         email: email,
-        password: password
+        password: password,
+        platform,
+        fcmToken
       })
 
-      const data = res.data;
-      const { token, ...user } = data;
+      if (res.status === 200) {
+        const data = res.data;
+        const { token, ...user } = data;
 
-      login(user, token)
+        login(user, token)
 
-      setname('')
-      setemail('')
-      setPassword('')
-      navigation.navigate("MyTabs", {
-        screen: "Home",
-        initial: true
-      });
-
-
-
+        setname('')
+        setemail('')
+        setPassword('')
+        navigation.navigate("MyTabs", {
+          screen: "Home",
+          initial: true
+        });
+      } 
     } catch (error) {
-      console.log("error while registering", error)
+      Toast.show({
+        type: "error",
+        text1: "User already exist"
+      })
 
     }
   };
@@ -86,7 +110,7 @@ const Signup = () => {
 
   return (
     <>
-      <Header />
+
       <SafeAreaView style={styles.container}>
         <View style={styles.form}>
           <Text style={styles.label}>Name</Text>
@@ -125,7 +149,7 @@ const Signup = () => {
           </TouchableOpacity>
 
           <View style={styles.loginContainer}>
-         
+
             <Text style={styles.loginText}>Already have an account?</Text>
             <TouchableOpacity onPress={() => navigation.navigate('Signin')}>
               <Text style={styles.loginLink}> Log In</Text>
@@ -143,21 +167,23 @@ export default Signup;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#e9f1fa',
+    backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
   },
   form: {
-    width: '90%',
-    backgroundColor: '#f8f896',
-    padding: 24,
-    borderRadius: 20,
+    backgroundColor: '#dadada',
+    padding: 20,
+    borderRadius: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.2,
     shadowRadius: 5,
-    elevation: 4,
-    gap: 14,
+    elevation: 16,
+    gap: 15,
+    width: '90%',
+    alignSelf: 'center',
+
   },
   label: {
     fontSize: 15.5,

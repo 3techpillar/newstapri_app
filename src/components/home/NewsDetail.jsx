@@ -117,7 +117,7 @@ const NewsDetail = ({ route }) => {
                     }
                 }}>
 
-                    <Text style={{ color: like ? "red" : "gray" }}>
+                    <Text style={{ color: like ? "red" : "gray",padding:"5",fontSize:15}}>
                         {like ? "♥ Liked" : "♡ Like"}
                     </Text>
 

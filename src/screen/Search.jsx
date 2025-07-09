@@ -12,9 +12,9 @@ const cardSize = (width - 60) / 2;
 
 const Search = () => {
     const navigation = useNavigation();
-
     const [input, setinput] = useState('')
     const [searchNews, setsearchNews] = useState([])
+    
 
 
 
@@ -46,8 +46,8 @@ const Search = () => {
 
     return (
         <>
-            <Header />
-            <ScrollView>
+           
+            <ScrollView style={styles.bigcontainer}>
                 <View style={styles.heading}>
 
                     <Text style={styles.discover}>Discover</Text>
@@ -97,6 +97,11 @@ const Search = () => {
 export default Search
 
 const styles = StyleSheet.create({
+
+    bigcontainer:{
+        paddingTop:45
+
+    },
     heading: {
         marginVertical: 15,
         marginHorizontal: 10

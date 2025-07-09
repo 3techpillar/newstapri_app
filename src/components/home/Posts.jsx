@@ -79,7 +79,7 @@ const Posts = () => {
                             <View style={styles.row}>
                                 {post.image && (
                                     <Image
-                                        source={{ uri: post.image }}
+                                        source={{ uri: post?.image }}
                                         style={styles.image}
                                         resizeMode="cover"
                                     />
@@ -131,8 +131,9 @@ const styles = StyleSheet.create({
     card: {
         margin: 6,
         backgroundColor: '#f0f0f0',
-        borderRadius: 10,
-        overflow: "hidden"
+        borderRadius: 12,
+        overflow: "hidden",
+        height:"100"
     },
     row: {
         flexDirection: 'row',

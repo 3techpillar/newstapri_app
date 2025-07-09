@@ -1,10 +1,17 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.newstapri">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
+
+
 
   
 
@@ -22,6 +29,23 @@
       <meta-data
     android:name="firebase_analytics_collection_enabled"
     android:value="true"/>
+
+
+ <service
+  android:name="io.invertase.firebase.messaging.ReactNativeFirebaseMessagingService"
+  android:exported="true"
+  tools:replace="android:exported">
+  <intent-filter>
+    <action android:name="com.google.firebase.MESSAGING_EVENT" />
+  </intent-filter>
+</service>
+
+<receiver android:exported="true" android:name="io.invertase.firebase.messaging.ReactNativeFirebaseReceiver">
+  <intent-filter>
+    <action android:name="io.invertase.firebase.messaging.NOTIFICATION_OPEN" />
+  </intent-filter>
+</receiver>
+
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"

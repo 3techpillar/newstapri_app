@@ -11,13 +11,16 @@ import {
 import { baseUrl } from '../../utils/apiCofig';
 import useAuthStore from '../../store/useAuthStore';
 import { formatTimeAgo } from '../../utils/Date';
+import { useNavigation } from '@react-navigation/native';
+
 
 const Comment = ({ postId }) => {
     const user = useAuthStore((state) => state.user);
     const token = useAuthStore((state) => state.token);
-
+     const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
     const [comments, setComments] = useState([]);
     const [input, setInput] = useState('');
+    const navigation = useNavigation();
 
  
 
@@ -73,6 +76,7 @@ const Comment = ({ postId }) => {
 
             style={styles.container}
         >
+            {isAuthenticated ? (
             <View style={styles.inputContainer}>
                 <TextInput
                     style={styles.input}
@@ -85,13 +89,16 @@ const Comment = ({ postId }) => {
                     <Text style={styles.buttonText}>Post</Text>
                 </TouchableOpacity>
             </View>
+            ) : (
+                <Text style={{color:"red",padding:"20",textAlign:"center",fontSize:15}}>Please login to comment</Text>        
+            )}
             <View contentContainerStyle={{ paddingBottom: 100 }}>
                 {comments.map((item, index) => (
                     <View style={styles.commentBox} key={index}>
                         <View style={styles.commentRow}>
                             <View style={styles.profileCircle}>
                                 <Text style={styles.profileInitial}>
-                                    {item.user?.name?.charAt(0) || 'U'}
+                                    {item.user?.name?.charAt(0)}
                                 </Text>
                             </View>
                             <View style={styles.commentContent}>

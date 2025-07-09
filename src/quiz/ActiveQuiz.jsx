@@ -1,26 +1,62 @@
 import { Alert, StyleSheet, Text, TouchableOpacity, View, Modal } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { ScrollView } from 'react-native-gesture-handler'
 import axios from 'axios'
 import useAuthStore from '../store/useAuthStore'
-
 import { baseUrl } from '../utils/apiCofig'
 import { useNavigation } from '@react-navigation/native'
 
 const ActiveQuiz = ({ route }) => {
+
+
+
     const { QuizAnswer } = route.params
-   
     const user = useAuthStore((state) => state.user);
     const navigation = useNavigation();
     const { login } = useAuthStore.getState()
 
-
-
     const [selectedOptions, setSelectedOptions] = useState({});
-
     const [modalVisible, setModalVisible] = useState(false);
     const [earnedPoints, setEarnedPoints] = useState(0);
-    
+    const [isTimeStart, setIsTimeStart] = useState(true)
+    const [timerDuration, setTimerDuration] = useState(20)
+
+    const Timer = ({ totalDuration, start, handleFinish }) => {
+  const [remainingTime, setRemainingTime] = useState(totalDuration);
+  const intervalRef = useRef(null);
+
+  useEffect(() => {
+    if (start) {
+      setRemainingTime(totalDuration);
+      clearInterval(intervalRef.current);
+
+      intervalRef.current = setInterval(() => {
+        setRemainingTime(prev => {
+          if (prev <= 1) {
+            clearInterval(intervalRef.current);
+         
+            setTimeout(() => {
+              handleFinish?.();
+            }, 0);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+
+    return () => clearInterval(intervalRef.current);
+  }, [start, totalDuration]);
+
+        return <Text style={{ textAlign: 'center', fontSize: 18 }}>{remainingTime}s</Text>;
+    };
+
+
+
+
+
+
+
 
 
     const handleOptionSelect = (questionId, selectedOption) => {
@@ -31,6 +67,7 @@ const ActiveQuiz = ({ route }) => {
     };
 
     const handleQuizSubmit = async () => {
+      setIsTimeStart(!isTimeStart)
 
         const transformedAnswers = Object.entries(selectedOptions).map(
             ([questionId, selectedOption]) => ({
@@ -47,6 +84,7 @@ const ActiveQuiz = ({ route }) => {
                 answers: transformedAnswers
             }
             )
+
             setEarnedPoints(res.data.pointsEarned);
             setModalVisible(true);
             login()
@@ -61,16 +99,15 @@ const ActiveQuiz = ({ route }) => {
     const handleAfterSubmit = () => {
         setModalVisible(false)
         navigation.navigate("MyTabs", {
-            screen: "Quiz",
+            screen: "Home",
             initial: true
         });
-
-         
-
-        
-        
-
     }
+
+
+
+
+
 
     return (
 
@@ -78,6 +115,12 @@ const ActiveQuiz = ({ route }) => {
             <Text style={{ fontSize: 22, fontWeight: 'bold', textAlign: 'center', marginTop: 20, marginBottom: 10 }}>
                 Best of Luck
             </Text>
+            <Timer
+                totalDuration={timerDuration}
+                start={isTimeStart}
+                handleFinish={handleQuizSubmit}
+            />
+
 
             {QuizAnswer.questions?.map((question, qIndex) => (
                 <View key={question._id} style={styles.questionBox}>

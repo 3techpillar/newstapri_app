@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, SafeAreaView, Button } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { baseUrl } from '../utils/apiCofig';
@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
     padding: 16,
     paddingTop:35,
     backgroundColor: '#f9fafb',
+    
   },
   heading: {
     fontSize: 24,

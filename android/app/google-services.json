@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "433385556397-ejbet2a009rtqd0r10d73kakhceedtov.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.newstapri",
+            "certificate_hash": "255db869440d74d84c4147fb312c7ca01cd4ce1d"
+          }
+        },
+        {
           "client_id": "433385556397-9nhqv2g75dtpv11tf8tqkf41n2jb2vso.apps.googleusercontent.com",
           "client_type": 3
         }
