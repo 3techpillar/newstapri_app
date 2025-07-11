@@ -86,6 +86,7 @@ const Signup = () => {
 
       if (res.status === 200) {
         const data = res.data;
+        console.log(" signup data",data)
         const { token, ...user } = data;
 
         login(user, token)
@@ -110,8 +111,9 @@ const Signup = () => {
 
   return (
     <>
-
+       <Header />
       <SafeAreaView style={styles.container}>
+       
         <View style={styles.form}>
           <Text style={styles.label}>Name</Text>
           <TextInput

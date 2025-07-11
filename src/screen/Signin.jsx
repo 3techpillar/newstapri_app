@@ -52,6 +52,7 @@ const Signin = () => {
         password: password
       })
       const data = res.data;
+   
       const { token, ...user } = data;
 
 

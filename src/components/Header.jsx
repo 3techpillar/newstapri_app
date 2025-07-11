@@ -55,55 +55,56 @@ const Header = () => {
 };
 
 export default Header;
-
 const styles = StyleSheet.create({
   container: {
- backgroundColor: '#f0f0f0',
+    backgroundColor: '#ffffff', // clean white or replace with '#f8f9fa' for soft grey
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    height: 60,
+    paddingHorizontal: 20,
+    height: 70,
     width: '100%',
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-    elevation: 4, 
-    shadowColor: '#000', 
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-    
+    borderBottomColor: '#e1e4e8',
+    elevation: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    zIndex: 1000,
   },
   left: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   logo: {
-    width: 80,
-    height: 45,
+    width: 100,
+    height: 50,
     resizeMode: 'contain',
     marginRight: 8,
-    
   },
-  
   menuContainer: {
     position: 'absolute',
-    top: 50,
-    right: 16,
+    top: 75, // below header
+    right: 20,
     backgroundColor: '#fff',
-    borderRadius: 8,
-    paddingVertical: 10,
-    paddingHorizontal: 15,
+    borderRadius: 12,
+    paddingVertical: 12,
+    paddingHorizontal: 18,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.15,
     shadowRadius: 6,
-    elevation: 5,
-    zIndex: 999,
+    elevation: 10,
+    zIndex: 1001,
+    width: 160,
   },
   menuItem: {
     fontSize: 16,
-    paddingVertical: 8,
-    color: '#333',
+    paddingVertical: 10,
+    color: '#1a1a1a',
+    fontWeight: '500',
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
   },
 });
