@@ -8,7 +8,7 @@ import axios from 'axios'
 import GoogleLogin from '../components/googleAuth/GoogleLogin'
 import Toast from 'react-native-toast-message'
 import Header from '../components/Header'
-import { getMessaging, getToken } from '@react-native-firebase/messaging';
+import { getMessaging } from '@react-native-firebase/messaging';
 import { getApp } from '@react-native-firebase/app'
 
 
@@ -148,11 +148,11 @@ const Signin = () => {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: 'white',
+      backgroundColor: '#f0f0f0',
     },
 
     form: {
-      backgroundColor: '#dadada',
+      backgroundColor: '#f0f0f0',
       padding: 30,
       borderRadius: 10,
       shadowColor: '#000',

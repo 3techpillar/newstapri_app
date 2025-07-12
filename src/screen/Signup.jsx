@@ -170,11 +170,11 @@ export default Signup;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#f0f0f0',
   
   },
   form: {
-    backgroundColor: '#dadada',
+    backgroundColor: '#f0f0f0',
       padding: 30,
       borderRadius: 10,
       shadowColor: '#000',

@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
     elevation: 4, 
-    shadowColor: '#000', 
+    shadowColor: '#f0f0f0', 
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
@@ -87,12 +87,12 @@ const styles = StyleSheet.create({
   
   menuContainer: {
     position: 'absolute',
-    top: 50,
+    top: 70,
     right: 16,
     backgroundColor: '#fff',
     borderRadius: 8,
     paddingVertical: 10,
-    paddingHorizontal: 15,
+    paddingHorizontal: 12,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
