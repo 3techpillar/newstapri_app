@@ -29,7 +29,7 @@ const Stack = createStackNavigator();
 
 const MyTabs = () => {
   return (
-    <Tab.Navigator screenOptions={{ tabBarActiveBackgroundColor: '#eeee', tabBarLabelStyle: { fontSize: 9, paddingVertical: 4 } }}>
+    <Tab.Navigator screenOptions={{ tabBarActiveBackgroundColor: 'blue', tabBarLabelStyle: { fontSize: 9, paddingVertical: 4 } }}>
       <Tab.Screen
         name="Home"
         component={Home}

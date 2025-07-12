@@ -84,7 +84,7 @@ const Quiz = () => {
 
   return (
     <>
-      <Header />
+    
 
       <ScrollView style={styles.container}>
         <Text style={styles.heading}>PLAY AND EARN REWARDS</Text>

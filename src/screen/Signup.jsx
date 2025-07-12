@@ -110,9 +110,10 @@ const Signup = () => {
 
 
   return (
-    <>
-       <Header />
+    
       <SafeAreaView style={styles.container}>
+
+       <Header />
        
         <View style={styles.form}>
           <Text style={styles.label}>Name</Text>
@@ -160,7 +161,7 @@ const Signup = () => {
           <GoogleLogin />
         </View>
       </SafeAreaView>
-    </>
+    
   );
 };
 
@@ -170,22 +171,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
+  
   },
   form: {
     backgroundColor: '#dadada',
-    padding: 20,
-    borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
-    elevation: 16,
-    gap: 15,
-    width: '90%',
-    alignSelf: 'center',
-
+      padding: 30,
+      borderRadius: 10,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.2,
+      shadowRadius: 5,
+      elevation: 16,
+      gap: 15,
+      width: '90%',
+      alignSelf: 'center',
+      marginTop: 60,
   },
   label: {
     fontSize: 15.5,

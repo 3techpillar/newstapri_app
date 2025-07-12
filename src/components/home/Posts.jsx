@@ -115,7 +115,7 @@ const Posts = () => {
                     <Text style={{ color: 'blue', fontWeight: 'bold' }}>View more...</Text>
                 </TouchableOpacity>
             )}
-            <View style={styles.horizontalLine} />
+          
 
         </ScrollView>
 
@@ -129,7 +129,7 @@ const Posts = () => {
 
 const styles = StyleSheet.create({
     card: {
-        margin: 6,
+        margin: 7,
         backgroundColor: '#f0f0f0',
         borderRadius: 12,
         overflow: "hidden",
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     },
     row: {
         flexDirection: 'row',
-        padding: 6,
+        padding: 7,
     },
     image: {
         width: 90,
@@ -170,12 +170,7 @@ const styles = StyleSheet.create({
         marginVertical: 10
 
     },
-    horizontalLine: {
-        borderBottomColor: '#000',
-        borderBottomWidth: 1,
-        width: '100%',
-        marginVertical: 0.2,
-    }
+   
 });
 
 export default Posts

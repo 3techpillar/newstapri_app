@@ -6,9 +6,12 @@ import useAuthStore from '../store/useAuthStore'
 import { baseUrl } from '../utils/apiCofig'
 import { useNavigation } from '@react-navigation/native'
 
+
+
+
+
+
 const ActiveQuiz = ({ route }) => {
-
-
 
     const { QuizAnswer } = route.params
     const user = useAuthStore((state) => state.user);
@@ -26,18 +29,18 @@ const ActiveQuiz = ({ route }) => {
   const intervalRef = useRef(null);
 
   useEffect(() => {
-    if (start) {
-      setRemainingTime(totalDuration);
-      clearInterval(intervalRef.current);
-
+    if (start && intervalRef.current === null) {
       intervalRef.current = setInterval(() => {
         setRemainingTime(prev => {
           if (prev <= 1) {
             clearInterval(intervalRef.current);
-         
+            intervalRef.current = null;
+            
+          
             setTimeout(() => {
               handleFinish?.();
             }, 0);
+
             return 0;
           }
           return prev - 1;
@@ -46,16 +49,14 @@ const ActiveQuiz = ({ route }) => {
     }
 
     return () => clearInterval(intervalRef.current);
-  }, [start, totalDuration]);
+  }, [start]);
 
-        return <Text style={{ textAlign: 'center', fontSize: 18 }}>{remainingTime}s</Text>;
-    };
-
-
-
-
-
-
+  return (
+    <Text style={{ textAlign: 'center', fontSize: 18 }}>
+      {remainingTime}s
+    </Text>
+  );
+};
 
 
 
@@ -67,7 +68,7 @@ const ActiveQuiz = ({ route }) => {
     };
 
     const handleQuizSubmit = async () => {
-      setIsTimeStart(!isTimeStart)
+      setIsTimeStart(false)
 
         const transformedAnswers = Object.entries(selectedOptions).map(
             ([questionId, selectedOption]) => ({

@@ -32,7 +32,7 @@ const Header = () => {
       <SafeAreaView style={styles.container}>
         <TouchableOpacity style={styles.left} onPress={handleClick}>
           <Image source={require('../assets/logo.png')} style={styles.logo} />
-          
+
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => setOpen(!open)}>
@@ -57,54 +57,52 @@ const Header = () => {
 export default Header;
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#ffffff', // clean white or replace with '#f8f9fa' for soft grey
+ backgroundColor: '#f0f0f0',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    height: 70,
+    paddingHorizontal: 19,
+    height: 90,
     width: '100%',
     borderBottomWidth: 1,
-    borderBottomColor: '#e1e4e8',
-    elevation: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    zIndex: 1000,
+    borderBottomColor: '#ccc',
+    elevation: 4, 
+    shadowColor: '#000', 
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    
   },
   left: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   logo: {
-    width: 100,
+    width: 90,
     height: 50,
     resizeMode: 'contain',
     marginRight: 8,
+    
   },
+  
   menuContainer: {
     position: 'absolute',
-    top: 75, // below header
-    right: 20,
+    top: 50,
+    right: 16,
     backgroundColor: '#fff',
-    borderRadius: 12,
-    paddingVertical: 12,
-    paddingHorizontal: 18,
+    borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.15,
+    shadowOpacity: 0.2,
     shadowRadius: 6,
-    elevation: 10,
-    zIndex: 1001,
-    width: 160,
+    elevation: 5,
+    zIndex: 999,
   },
   menuItem: {
     fontSize: 16,
-    paddingVertical: 10,
-    color: '#1a1a1a',
-    fontWeight: '500',
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    paddingVertical: 8,
+    color: '#333',
   },
 });
