@@ -40,7 +40,7 @@ const Quiz = () => {
   
 
   const fetchPlayedUser = async (quizId) => {
-    console.log(userId,quizId)
+ 
     
     try {
       const response = await axios.get(`${baseUrl}/v1/quizzes/played-user/${userId}/${quizId}`);
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#f6f6f6',
     flex: 1,
-    marginTop: 40
+    marginTop: 60
   },
   heading: {
     fontSize: 19,

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Text, TouchableOpacity,StyleSheet } from 'react-native';
-import { GoogleSignin, statusCodes, GoogleLogoButton,GoogleSigninButton } from '@react-native-google-signin/google-signin';
+import {  TouchableOpacity,StyleSheet,Platform } from 'react-native';
+import { GoogleSignin, statusCodes,GoogleSigninButton } from '@react-native-google-signin/google-signin';
 import axios from 'axios';
 import { baseUrl } from '../../utils/apiCofig';
 import useAuthStore from '../../store/useAuthStore';
 import { useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
+import { getMessaging } from '@react-native-firebase/messaging';
+import { getApp } from '@react-native-firebase/app'
 
 
 
@@ -14,8 +16,27 @@ const WEB_CLIENT_ID = '433385556397-9nhqv2g75dtpv11tf8tqkf41n2jb2vso.apps.google
 export default function GoogleLogin() {
   const [gmail, setGmail] = useState(null);
   const [error, setError] = useState('');
+  const [fcmToken, setfcmToken] = useState('')
   const { login } = useAuthStore();
   const navigation = useNavigation();
+
+  const platform=Platform.OS;
+
+   const app = getApp();
+   const messaging = getMessaging(app);
+
+    useEffect(() => {
+       token()
+     }, [fcmToken])
+   
+     const token = async () => {
+       const token = await messaging.getToken();
+       console.log("fcm token for device is", token)
+       setfcmToken(token);
+     }
+   
+
+
 
   useEffect(() => {
     configureGoogleSign();
@@ -41,8 +62,11 @@ export default function GoogleLogin() {
         name: userInfo?.user?.name || userInfo?.data?.user?.name,
         email: userInfo?.user?.email || userInfo?.data?.user?.email,
         googlePhotoUrl: userInfo?.user?.photo || userInfo?.data?.user?.photo,
+        fcmToken,
+        platform
+
       });
-      console.log("res",res)
+    
       
       const data = res.data;
       const { token, ...user } = data;

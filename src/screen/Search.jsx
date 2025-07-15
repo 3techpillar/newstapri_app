@@ -1,6 +1,5 @@
 import { Dimensions, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import Header from '../components/Header'
 import SearchPost from '../components/post/SearchPost'
 import axios from 'axios'
 import { baseUrl } from '../utils/apiCofig'
@@ -15,10 +14,6 @@ const Search = () => {
     const [input, setinput] = useState('')
     const [searchNews, setsearchNews] = useState([])
     
-
-
-
-    console.log("search input", input)
 
     useEffect(() => {
         const timeoutId = setTimeout(() => {
@@ -111,7 +106,7 @@ const styles = StyleSheet.create({
         fontWeight: 800
     },
     desc: {
-        fontSize: 18,
+        fontSize: 19,
         color: "#454545"
     },
     container: {
@@ -147,8 +142,8 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 8,
     },
     title: {
-        fontSize: 14,
-        fontWeight: '600',
+        fontSize: 16,
+        fontWeight: '650',
         padding: 8,
         color: '#333',
     },

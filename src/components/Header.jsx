@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   
   menuContainer: {
     position: 'absolute',
-    top: 70,
+    top: 100,
     right: 16,
     backgroundColor: '#fff',
     borderRadius: 8,
