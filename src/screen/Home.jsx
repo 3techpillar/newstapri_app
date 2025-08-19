@@ -138,7 +138,7 @@ const Home = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header />
+      
       <ScrollView >
         <View>
           <Trending />

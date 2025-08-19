@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions } from 'rea
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import MenuIcon from 'react-native-vector-icons/Feather';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useState } from 'react';
 
 const { width } = Dimensions.get('window');
@@ -19,6 +20,11 @@ const Header = () => {
     navigation.navigate('Contact');
     setOpen(false);
   };
+  const handlePrivacy = () => {
+    navigation.navigate('Privacy');
+    setOpen(false);
+  };
+
 
   const handleClick = () => {
     navigation.reset({
@@ -34,66 +40,45 @@ const Header = () => {
           <Image source={require('../assets/logo.png')} style={styles.logo} />
 
         </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => setOpen(!open)}>
+        <TouchableOpacity onPress={() => setOpen(true)}>
           <MenuIcon name="menu" size={28} color="black" />
         </TouchableOpacity>
-         </SafeAreaView>
+      </SafeAreaView>
 
       {open && (
         <View style={styles.menuContainer}>
-          <TouchableOpacity onPress={handleAbout}>
-            <Text style={styles.menuItem}>About</Text>
+          <TouchableOpacity style={styles.close} onPress={() => setOpen(false)}>
+            <AntDesign name="close" size={28} color="black" />
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleContact}>
-            <Text style={styles.menuItem}>Contact</Text>
-          </TouchableOpacity>
+          <View style={styles.menuItemView}>
+            <TouchableOpacity onPress={handleAbout}>
+              <Text style={styles.menuItem}>About</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleContact}>
+              <Text style={styles.menuItem}>Contact</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handlePrivacy}>
+              <Text style={styles.menuItem}>Privacy</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       )}
-        
+
     </>
   );
 };
 
 export default Header;
 const styles = StyleSheet.create({
-  container: {
- backgroundColor: '#f0f0f0',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 19,
-    height: 90,
-    width: '100%',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-    elevation: 4, 
-    shadowColor: '#f0f0f0', 
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-    position :'relative',
-    
-  },
-  left: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  logo: {
-    width: 90,
-    height: 50,
-    resizeMode: 'contain',
-    marginRight: 8,
-    
-  },
-  
   menuContainer: {
     position: 'absolute',
-    top: 90,
-    right: 16,
+    width: "70%",
+    height: "100%",
+    top: 0,
+    right: 0,
     backgroundColor: '#fff',
     borderRadius: 8,
-    paddingVertical: 10,
+    paddingVertical: 30,
     paddingHorizontal: 12,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
@@ -102,9 +87,63 @@ const styles = StyleSheet.create({
     elevation: 5,
     zIndex: 999,
   },
+  container: {
+    backgroundColor: '#f0f0f0',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 19,
+    height: 60,
+    width: '100%',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    elevation: 4,
+    shadowColor: '#f0f0f0',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    position: 'relative',
+
+  },
+  left: {
+    flexDirection: 'row',
+    alignItems: 'center',
+
+  },
+  logo: {
+    width: 90,
+    height: 50,
+    resizeMode: 'contain',
+    marginRight: 8,
+
+  },
+
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#000',
+    position: 'absolute',
+    left: width / 2 - 40,
+  },
+
+menuItemView: {
+  marginTop: 40,
+    display: "flex",
+    flexDirection: "column",
+    gap: 10
+},
   menuItem: {
     fontSize: 16,
-    paddingVertical: 8,
+
+    paddingVertical: 10,
+    paddingHorizontal: 8,
+    borderRadius: 10,
     color: '#333',
+    backgroundColor: "#F2F2F2"
   },
+  close: {
+    position: "absolute",
+    right: 20,
+    top: 20
+  }
 });

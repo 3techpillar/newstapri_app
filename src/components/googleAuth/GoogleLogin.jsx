@@ -20,6 +20,8 @@ export default function GoogleLogin() {
   const { login } = useAuthStore();
   const navigation = useNavigation();
 
+
+
   const platform=Platform.OS;
 
    const app = getApp();

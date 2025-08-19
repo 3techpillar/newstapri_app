@@ -19,6 +19,8 @@ import Transactions from './src/ProfilePage/Transactions';
 import Wallet from './src/ProfilePage/Wallet';
 import About from './src/screen/About';
 import Contact from './src/screen/Contact';
+import Privacy from './src/screen/Privacy';
+import Header from './src/components/Header';
 
 
 const Tab = createBottomTabNavigator();
@@ -29,25 +31,25 @@ const Stack = createStackNavigator();
 
 const MyTabs = () => {
   return (
-    <Tab.Navigator screenOptions={{ tabBarActiveBackgroundColor: 'blue', tabBarLabelStyle: { fontSize: 7, paddingVertical: 4 } }}>
+    <Tab.Navigator screenOptions={{ tabBarActiveBackgroundColor: 'black', tabBarLabelStyle: { fontSize: 7, paddingVertical: 4 } }}>
       <Tab.Screen
         name="Home"
         component={Home}
         options={{
           headerShown: false,
-          tabBarIcon: () => <HomeIcon name="home" size={30} color="black" />,
+          tabBarIcon: () => <HomeIcon name="home" size={30} color="gray" />,
         }}
       />
       <Tab.Screen name='Search' component={Search} options={{
         headerShown: false,
-        tabBarIcon: () => <SearchIcon name="search" size={30} color="black" />,
+        tabBarIcon: () => <SearchIcon name="search" size={30} color="gray" />,
       }}
       />
 
       <Tab.Screen name="Quiz" component={Quiz}
         options={{
           headerShown: false,
-          tabBarIcon: () => <QuizIcon name="quiz" size={30} color="black" />,
+          tabBarIcon: () => <QuizIcon name="quiz" size={30} color="gray" />,
         }}
       />
       <Tab.Screen
@@ -55,7 +57,7 @@ const MyTabs = () => {
         component={Profile}
         options={{
           headerShown: false,
-          tabBarIcon: () => <ProfileIcon name="user" size={30} color="black" />,
+          tabBarIcon: () => <ProfileIcon name="user" size={30} color="gray" />,
         }}
       />
 
@@ -66,10 +68,12 @@ const MyTabs = () => {
 const App = () => {
   return (
     <>
-   
       <NavigationContainer>
+        <Header />
         <Stack.Navigator>
+
           <Stack.Screen name="MyTabs" component={MyTabs} options={{ headerShown: false }} />
+          <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
           <Stack.Screen name="NewsDetail" component={NewsDetail} options={{ headerShown: false }} />
           <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false }} />
           <Stack.Screen name="Signin" component={Signin} options={{ headerShown: false }} />
@@ -78,10 +82,8 @@ const App = () => {
           <Stack.Screen name="Transactions" component={Transactions} options={{ headerShown: false }} />
           <Stack.Screen name="About" component={About} options={{ headerShown: false }} />
           <Stack.Screen name="Contact" component={Contact} options={{ headerShown: false }} />
+          <Stack.Screen name="Privacy" component ={Privacy} options={{headerShown:false }} />
           <Stack.Screen name="Wallet" component={Wallet} options={{ headerShown: false }} />
-
-
-
         </Stack.Navigator>
       </NavigationContainer>
       <Toast />
@@ -89,4 +91,4 @@ const App = () => {
   )
 }
 
-export default App
+export default App ;

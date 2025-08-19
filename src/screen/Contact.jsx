@@ -1,7 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import Header from '../components/Header';
 
 const Contact = () => {
+
+  const navigation =useNavigation();
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.heading}>Contact Us</Text>
@@ -10,7 +14,7 @@ const Contact = () => {
 
         <Text style={styles.subheading}>News and Updates</Text>
         <Text style={styles.paragraph}>
-          Welcome to <Text style={styles.bold}>Newstapri</Text>, We are committed to keeping our users informed with the latest news and updates.
+          Welcome to <Text onPress ={()=> navigation.navigate ("Home")}> <Text style={styles.bold}>Newstapri</Text> </Text>, We are committed to keeping our users informed with the latest news and updates.
           Our platform will provide regular announcements about upcoming events and any important current news. 
           This ensures that you are always aware of the latest developments and can stay engaged with our community. 
           We strive to deliver accurate and timely information to enhance your overall experience.
@@ -52,20 +56,20 @@ const Contact = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#f5f5ea',
+    backgroundColor: '#ffffff',
     padding: 16,
   },
   heading: {
     fontSize: 32,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: '#813524', 
+    color: '#1f2a38', 
     marginBottom: 24,
   },
   subheading: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#0e0807',
+    color: '#2e66f2',
     marginBottom: 8,
   },
   paragraph: {
@@ -76,7 +80,7 @@ const styles = StyleSheet.create({
   },
   bold: {
     fontWeight: 'bold',
-    color: '#1565C0',
+    color: '#FF9149',
   },
   card: {
     backgroundColor: '#fff',
