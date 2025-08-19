@@ -38,7 +38,7 @@ const Header = () => {
         <TouchableOpacity onPress={() => setOpen(!open)}>
           <MenuIcon name="menu" size={28} color="black" />
         </TouchableOpacity>
-      </SafeAreaView>
+         </SafeAreaView>
 
       {open && (
         <View style={styles.menuContainer}>
@@ -50,6 +50,7 @@ const Header = () => {
           </TouchableOpacity>
         </View>
       )}
+        
     </>
   );
 };
@@ -71,6 +72,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
+    position :'relative',
     
   },
   left: {
@@ -87,7 +89,7 @@ const styles = StyleSheet.create({
   
   menuContainer: {
     position: 'absolute',
-    top: 100,
+    top: 90,
     right: 16,
     backgroundColor: '#fff',
     borderRadius: 8,

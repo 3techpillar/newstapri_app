@@ -16,13 +16,13 @@ const Home = () => {
 
     const setupNotifications = async () => {
       try {
-        console.log('🚀 Starting notification setup...');
+        console.log(' Starting notification setup...');
         const app = getApp();
         const messaging = getMessaging(app);
 
         if (!messaging.isDeviceRegisteredForRemoteMessages) {
           await messaging.registerDeviceForRemoteMessages();
-          console.log('📱 Device registered for remote messages');
+          console.log(' Device registered for remote messages');
         }
 
         const authStatus = await messaging.requestPermission({
@@ -38,7 +38,7 @@ const Home = () => {
           authStatus === AuthorizationStatus.AUTHORIZED ||
           authStatus === AuthorizationStatus.PROVISIONAL;
 
-        console.log('🔐 Firebase Permission:', enabled, authStatus);
+        console.log(' Firebase Permission:', enabled, authStatus);
 
         if (!enabled) {
           Alert.alert(
@@ -58,10 +58,10 @@ const Home = () => {
               buttonNegative: 'Deny',
             }
           );
-          console.log('📲 POST_NOTIFICATIONS:', granted);
+          console.log(' POST_NOTIFICATIONS:', granted);
 
           if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
-            console.log('⚠️ POST_NOTIFICATIONS denied');
+            console.log(' POST_NOTIFICATIONS denied');
             return;
           }
         }
@@ -75,14 +75,14 @@ const Home = () => {
               sound: 'default',
               vibration: true,
             });
-            console.log('📢 Notification channel created');
+            console.log(' Notification channel created');
           } catch (channelError) {
-            console.log('⚠️ Channel creation error:', channelError);
+            console.log(' Channel creation error:', channelError);
           }
         }
 
         unsubscribeOnMessage = messaging.onMessage(async remoteMessage => {
-          console.log('📩 Foreground message received:', JSON.stringify(remoteMessage, null, 2));
+          console.log(' Foreground message received:', JSON.stringify(remoteMessage, null, 2));
           try {
             await notifee.displayNotification({
               title: remoteMessage.notification?.title || 'New Notification',
@@ -100,25 +100,25 @@ const Home = () => {
                 badgeCount: 1,
               },
             });
-            console.log('✅ Notification displayed successfully');
+            console.log(' Notification displayed successfully');
           } catch (displayError) {
-            console.log('❌ Notification display error:', displayError);
+            console.log(' Notification display error:', displayError);
           }
         });
 
           const initialNotification = await messaging.getInitialNotification();
           if (initialNotification) {
-            console.log('🧊 Notification opened from quit state:', JSON.stringify(initialNotification, null, 2));
+            console.log(' Notification opened from quit state:', JSON.stringify(initialNotification, null, 2));
           }
 
           unsubscribeTokenRefresh = messaging.onTokenRefresh(newToken => {
-            console.log('🔄 FCM Token refreshed:', newToken);
+            console.log(' FCM Token refreshed:', newToken);
             
           });
 
-          console.log('✅ Notification setup completed successfully');
+          console.log(' Notification setup completed successfully');
         } catch (error) {
-          console.error('❌ Notification setup error:', error);
+          console.log(' Notification setup error:', error);
           Alert.alert('Setup Error', `Failed to setup notifications: ${error.message}`);
         }
       };

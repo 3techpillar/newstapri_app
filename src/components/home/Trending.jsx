@@ -26,6 +26,7 @@ const Trending = () => {
 
   const fetchTrendingPost = async () => {
     try {
+      console.log("base url", baseUrl)
       const res = await axios.get(`${baseUrl}/v1/post/getposts?trending=true`);
       const data = res.data;
       setTrendingNews(data.posts || []);
