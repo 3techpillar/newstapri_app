@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image, Dimensions, Alert } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState ,useRef } from 'react'
 import Header from '../Header';
 import axios from "axios"
 import { baseUrl } from '../../utils/apiCofig';
@@ -27,6 +27,7 @@ const NewsDetail = ({ route }) => {
     const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
     const user = useAuthStore((state) => state.user);
     const navigation = useNavigation();
+    const scrollRef =useRef(null);
 
     useEffect(() => {
         fetchNewsBySlug();
@@ -49,12 +50,16 @@ const NewsDetail = ({ route }) => {
                 });
               
             } catch (error) {
-                console.log('❌ Error logging event', error);
+                console.log(' Error logging event', error);
             }
         };
 
         sendTestEvent();
     }, [newsSlug]);
+    
+    useEffect (() => {
+        scrollRef.current?.scrollTo({ y:0, animated : false});
+    },[newsSlug]);
 
 
     const fetchNewsBySlug = async () => {
@@ -101,13 +106,15 @@ const NewsDetail = ({ route }) => {
     return (
         <>
             <Header />
-            <ScrollView style={styles.container}>
+            <ScrollView ref={scrollRef} style={styles.container}>
 
 
                 <Text style={styles.title}>{newsDetail.title}</Text>
                 <Text style={styles.englishTitle}>{newsDetail.englishTitle}</Text>
-
-                <Image source={{ uri: newsDetail.image }} style={styles.image} />
+                 
+                 <TouchableOpacity onPress={() => scrollRef.current?.scrollTo({y:0 , animated: true})} >
+                  <Image source={{ uri: newsDetail.image }} style={styles.image} />
+                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={() => {
                     if (isAuthenticated) {

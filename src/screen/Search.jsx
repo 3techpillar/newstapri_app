@@ -1,5 +1,5 @@
 import { Dimensions, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState ,useRef } from 'react'
 import SearchPost from '../components/post/SearchPost'
 import axios from 'axios'
 import { baseUrl } from '../utils/apiCofig'
@@ -13,7 +13,7 @@ const Search = () => {
     const navigation = useNavigation();
     const [input, setinput] = useState('')
     const [searchNews, setsearchNews] = useState([])
-    
+    const scrollRef = useRef (null);
 
     useEffect(() => {
         const timeoutId = setTimeout(() => {
@@ -28,11 +28,11 @@ const Search = () => {
     const fetchSearchNews = async () => {
         try {
             const res = await axios.get(`${baseUrl}/v1/post/getposts?searchTerm=${input}`)
-            const data = res.data
-            setsearchNews(data.posts)
+            const data = res.data ;
+            setsearchNews(data.posts) ;
 
         } catch (error) {
-            console.log("please try after some time..", error)
+            console.log("please try after some time..", error);
 
         }
 
@@ -42,7 +42,7 @@ const Search = () => {
     return (
         <>
            
-            <ScrollView style={styles.bigcontainer}>
+            <ScrollView style={styles.bigcontainer} ref ={scrollRef}>
                 <View style={styles.heading}>
 
                     <Text style={styles.discover}>Discover</Text>
@@ -63,7 +63,12 @@ const Search = () => {
                 {input.length > 0 && (
                     <View style={styles.gridContainer}>
                         {searchNews.map((post, index) => (
-                            <TouchableOpacity onPress={() => navigation.navigate('NewsDetail', { newsSlug: post.slug })} key={index} style={[styles.card, { width: cardSize, height: cardSize }]}>
+                            <TouchableOpacity   key={index}
+                             style={[styles.card, { width: cardSize, height: cardSize }]}
+                                onPress ={() =>{
+                                     scrollRef.current ?.scrollTo({ u:0, animated : true});
+                                     navigation.navigate('NewsDetail', { newsSlug: post.slug });
+                                }} >
                                 {post.image && (
                                     <Image
                                         source={{ uri: post.image }}
@@ -89,7 +94,7 @@ const Search = () => {
     )
 }
 
-export default Search
+export default Search ;
 
 const styles = StyleSheet.create({
 
@@ -156,4 +161,4 @@ const styles = StyleSheet.create({
 
 
 
-})
+});
