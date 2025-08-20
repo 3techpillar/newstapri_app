@@ -105,7 +105,7 @@ const NewsDetail = ({ route }) => {
 
     return (
         <>
-            <Header />
+          
             <ScrollView ref={scrollRef} style={styles.container}>
 
 

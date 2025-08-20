@@ -20,6 +20,9 @@ import Wallet from './src/ProfilePage/Wallet';
 import About from './src/screen/About';
 import Contact from './src/screen/Contact';
 import Privacy from './src/screen/Privacy';
+import Facebook from './src/components/Header'
+import Instagram from './src/components/Header'
+import Twitter from './src/components/Header'
 import Header from './src/components/Header';
 
 
@@ -82,13 +85,20 @@ const App = () => {
           <Stack.Screen name="Transactions" component={Transactions} options={{ headerShown: false }} />
           <Stack.Screen name="About" component={About} options={{ headerShown: false }} />
           <Stack.Screen name="Contact" component={Contact} options={{ headerShown: false }} />
-          <Stack.Screen name="Privacy" component ={Privacy} options={{headerShown:false }} />
+          <Stack.Screen name="Privacy" component={Privacy} options={{ headerShown: false }} />
+          <Stack.Screen name="Facebook" component={Facebook} options={{ headerShown: false }} />
+          <Stack.Screen name="Instagram" component={Instagram} options={{ headerShown: false }} />
+          <Stack.Screen name="Twitter" component={Twitter} options={{ headerShown: false }} />
           <Stack.Screen name="Wallet" component={Wallet} options={{ headerShown: false }} />
+
         </Stack.Navigator>
+
       </NavigationContainer>
       <Toast />
+
+
     </>
   )
 }
 
-export default App ;
+export default App;

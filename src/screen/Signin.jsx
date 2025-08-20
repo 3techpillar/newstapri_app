@@ -7,7 +7,6 @@ import useAuthStore from '../store/useAuthStore'
 import axios from 'axios'
 import GoogleLogin from '../components/googleAuth/GoogleLogin'
 import Toast from 'react-native-toast-message'
-import Header from '../components/Header'
 import { getMessaging } from '@react-native-firebase/messaging';
 import { getApp } from '@react-native-firebase/app'
 
@@ -101,7 +100,7 @@ const Signin = () => {
 
 
       <SafeAreaView style={styles.container}>
-        <Header />
+        
 
         <View style={styles.form}>
           <Text style={styles.label}>Email</Text>

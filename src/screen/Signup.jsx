@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Platform } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Header from '../components/Header';
 import axios, { AxiosError } from 'axios';
 import { baseUrl } from '../utils/apiCofig';
 import useAuthStore from '../store/useAuthStore';
@@ -112,8 +111,6 @@ const Signup = () => {
   return (
     
       <SafeAreaView style={styles.container}>
-
-       <Header />
        
         <View style={styles.form}>
           <Text style={styles.label}>Name</Text>
