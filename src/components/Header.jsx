@@ -3,7 +3,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import MenuIcon from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { useState } from 'react';
 
@@ -80,18 +79,18 @@ const Header = () => {
           <View styles={styles.socialContainer}>
             <View style={styles.iconRow}>
               <TouchableOpacity onPress={() => openLink("https://www.facebook.com/checkpoint/disabled/")}>
-                <MaterialCommunityIcons name='facebook' size={35} color="#3b5998" style={styles.socialIcon} />
+                <Image source ={ require('../assets/facebook.png')} size={28}  style={styles.socialIcon} />
               </TouchableOpacity>
 
               <TouchableOpacity onPress={() => openLink("https://www.instagram.com/news_tapri_/")}>
-                <MaterialCommunityIcons name="instagram" size={35} color="#C13584" style={styles.socialIcon} />
+                < Image source ={require('../assets/instagram.png')} size={28}  style={styles.socialIcon} />
               </TouchableOpacity>
               <TouchableOpacity onPress={() => openLink("https://x.com/news_tapri?")}>
-                <MaterialCommunityIcons name="twitter" size={35} color="#1DA1F2" style={styles.socialIcon} />
+                < Image source ={require('../assets/twitter.png')} size={28}  style={styles.socialIcon} />
               </TouchableOpacity>
 
             <TouchableOpacity onPress={() => openLink("https://www.whatsapp.com")}>
-                <MaterialCommunityIcons name="whatsapp" size={35} color="#39d467" style={styles.socialIcon} />
+                < Image source ={require('../assets/whatsapp.png')} size={28} style={styles.socialIcon} />
               </TouchableOpacity>
               
             </View>
@@ -114,6 +113,7 @@ const styles = StyleSheet.create({
     right: 0,
     backgroundColor: '#fff',
     borderRadius: 8,
+    paddingTop: 60,
     paddingVertical: 30,
     paddingHorizontal: 12,
     shadowColor: '#000',
@@ -129,8 +129,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 19,
-    height: 80,
-    width: '100%',
+    height: 95,
+    // width: '100%',
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
     elevation: 4,
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
-    position: 'relative',
+    // position: 'relative',
   },
   left: {
     flexDirection: 'row',
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
   close: {
     position: "absolute",
     right: 20,
-    top: 20
+    top: 60
   },
   socialContainer: {
     alignItems: 'center',
@@ -186,11 +186,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 5,
     height: "85%",
+    width: "70%",
   },
   socialIcon: {
     marginHorizontal: 10,
-    height: "10%",
-    width: "80%",
-    top: "48%",
+    height: 24,
+    width: 24,
+    resizeMode: 'contain',
+    marginVertical: 10,
+     top: "48%",
   },
 });

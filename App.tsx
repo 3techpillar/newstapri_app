@@ -29,9 +29,6 @@ import Header from './src/components/Header';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-
-
-
 const MyTabs = () => {
   return (
     <Tab.Navigator screenOptions={{ tabBarActiveBackgroundColor: 'black', tabBarLabelStyle: { fontSize: 7, paddingVertical: 4 } }}>
@@ -92,11 +89,8 @@ const App = () => {
           <Stack.Screen name="Wallet" component={Wallet} options={{ headerShown: false }} />
 
         </Stack.Navigator>
-
       </NavigationContainer>
       <Toast />
-
-
     </>
   )
 }
