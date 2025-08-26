@@ -1,10 +1,9 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions ,Linking , Alert} from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions ,Linking , Alert, Modal} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import MenuIcon from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import { WebView } from 'react-native-webview';
 import { useState } from 'react';
 
 const { width } = Dimensions.get('window');
@@ -12,6 +11,7 @@ const { width } = Dimensions.get('window');
 const Header = () => {
   const navigation = useNavigation();
   const [open, setOpen] = useState(false);
+  const [url, setUrl] = useState(null);
 
   const handleAbout = () => {
     navigation.navigate('About');
@@ -35,18 +35,11 @@ const Header = () => {
     });
   };
 
-  const openLink = async (url) => {
-    try {
-      const supported = await Linking.canOpenURL(url);
-      if (supported) {
-        await Linking.openURL(url);
-      } else {
-        Alert.alert("Error", "Can't open this URL: " + url);
-      }
-    } catch (err) {
-      Alert.alert("Error", "Something went wrong");
-    }
-  };
+ const openLink = (link) => {
+  setUrl(link);   
+  setOpen(false); 
+ 
+};
 
   return (
     <>
@@ -59,8 +52,18 @@ const Header = () => {
           <MenuIcon name="menu" size={28} color="black" />
         </TouchableOpacity>
       </SafeAreaView>
+         {url ? (
+      <Modal visible={!!url} animationType="slide" onRequestClose={() => setUrl(null)}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+          <TouchableOpacity style={styles.close} onPress={() => setUrl(null)}>
+            <AntDesign name="close" size={28} color="black" />
+          </TouchableOpacity>
+          <WebView source={{ uri: url }} style={{ flex: 1 }} />
+        </SafeAreaView>
+      </Modal>
+         ):(
 
-      {open && (
+      open && (
         <View style={styles.menuContainer}>
           <TouchableOpacity style={styles.close} onPress={() => setOpen(false)}>
             <AntDesign name="close" size={28} color="black" />
@@ -80,27 +83,29 @@ const Header = () => {
           <View styles={styles.socialContainer}>
             <View style={styles.iconRow}>
               <TouchableOpacity onPress={() => openLink("https://www.facebook.com/checkpoint/disabled/")}>
-                <MaterialCommunityIcons name='facebook' size={35} color="#3b5998" style={styles.socialIcon} />
+                <Image source ={ require('../assets/facebook.png')} size={28}  style={styles.socialIcon} />
               </TouchableOpacity>
 
               <TouchableOpacity onPress={() => openLink("https://www.instagram.com/news_tapri_/")}>
-                <MaterialCommunityIcons name="instagram" size={35} color="#C13584" style={styles.socialIcon} />
+                < Image source ={require('../assets/instagram.png')} size={28}  style={styles.socialIcon} />
               </TouchableOpacity>
               <TouchableOpacity onPress={() => openLink("https://x.com/news_tapri?")}>
-                <MaterialCommunityIcons name="twitter" size={35} color="#1DA1F2" style={styles.socialIcon} />
+                < Image source ={require('../assets/twitter.png')} size={28}  style={styles.socialIcon} />
               </TouchableOpacity>
 
             <TouchableOpacity onPress={() => openLink("https://www.whatsapp.com")}>
-                <MaterialCommunityIcons name="whatsapp" size={35} color="#39d467" style={styles.socialIcon} />
+                < Image source ={require('../assets/whatsapp.png')} size={28} style={styles.socialIcon} />
               </TouchableOpacity>
               
             </View>
-            <Text>Copyright © 2025 NewsTapri</Text>
+            <Text style={styles.textItem}>Copyright © 2025 NewsTapri</Text>
           </View>
         </View>
+      )
       )}
-
+    
     </>
+    
   );
 };
 
@@ -110,10 +115,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: "70%",
     height: "100%",
-    top: 0,
+    top: 90,
     right: 0,
     backgroundColor: '#fff',
     borderRadius: 8,
+    paddingTop: 60,
     paddingVertical: 30,
     paddingHorizontal: 12,
     shadowColor: '#000',
@@ -129,8 +135,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 19,
-    height: 80,
-    width: '100%',
+    height: 95,
+    // width: '100%',
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
     elevation: 4,
@@ -138,7 +144,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
-    position: 'relative',
+    // position: 'relative',
   },
   left: {
     flexDirection: 'row',
@@ -174,7 +180,7 @@ const styles = StyleSheet.create({
   close: {
     position: "absolute",
     right: 20,
-    top: 20
+    top: 20,
   },
   socialContainer: {
     alignItems: 'center',
@@ -185,12 +191,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: 'center',
     gap: 5,
-    height: "85%",
+    height: "80%",
+    width: "70%",
+    left:70,
   },
   socialIcon: {
     marginHorizontal: 10,
-    height: "10%",
-    width: "80%",
-    top: "48%",
+    height: 24,
+    width: 24,
+    resizeMode: 'contain',
+    marginVertical: 10,
+     top: "48%",
+  },
+  textItem :{
+  left:70,
   },
 });
