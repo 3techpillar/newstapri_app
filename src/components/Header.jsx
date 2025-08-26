@@ -1,9 +1,9 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions ,Linking , Alert} from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions ,Linking , Alert, Modal} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import MenuIcon from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-
+import { WebView } from 'react-native-webview';
 import { useState } from 'react';
 
 const { width } = Dimensions.get('window');
@@ -11,6 +11,7 @@ const { width } = Dimensions.get('window');
 const Header = () => {
   const navigation = useNavigation();
   const [open, setOpen] = useState(false);
+  const [url, setUrl] = useState(null);
 
   const handleAbout = () => {
     navigation.navigate('About');
@@ -34,18 +35,11 @@ const Header = () => {
     });
   };
 
-  const openLink = async (url) => {
-    try {
-      const supported = await Linking.canOpenURL(url);
-      if (supported) {
-        await Linking.openURL(url);
-      } else {
-        Alert.alert("Error", "Can't open this URL: " + url);
-      }
-    } catch (err) {
-      Alert.alert("Error", "Something went wrong");
-    }
-  };
+ const openLink = (link) => {
+  setUrl(link);   
+  setOpen(false); 
+ 
+};
 
   return (
     <>
@@ -58,8 +52,18 @@ const Header = () => {
           <MenuIcon name="menu" size={28} color="black" />
         </TouchableOpacity>
       </SafeAreaView>
+         {url ? (
+      <Modal visible={!!url} animationType="slide" onRequestClose={() => setUrl(null)}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+          <TouchableOpacity style={styles.close} onPress={() => setUrl(null)}>
+            <AntDesign name="close" size={28} color="black" />
+          </TouchableOpacity>
+          <WebView source={{ uri: url }} style={{ flex: 1 }} />
+        </SafeAreaView>
+      </Modal>
+         ):(
 
-      {open && (
+      open && (
         <View style={styles.menuContainer}>
           <TouchableOpacity style={styles.close} onPress={() => setOpen(false)}>
             <AntDesign name="close" size={28} color="black" />
@@ -94,12 +98,14 @@ const Header = () => {
               </TouchableOpacity>
               
             </View>
-            <Text>Copyright © 2025 NewsTapri</Text>
+            <Text style={styles.textItem}>Copyright © 2025 NewsTapri</Text>
           </View>
         </View>
+      )
       )}
-
+    
     </>
+    
   );
 };
 
@@ -109,7 +115,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: "70%",
     height: "100%",
-    top: 0,
+    top: 90,
     right: 0,
     backgroundColor: '#fff',
     borderRadius: 8,
@@ -174,7 +180,7 @@ const styles = StyleSheet.create({
   close: {
     position: "absolute",
     right: 20,
-    top: 60
+    top: 20,
   },
   socialContainer: {
     alignItems: 'center',
@@ -185,8 +191,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: 'center',
     gap: 5,
-    height: "85%",
+    height: "80%",
     width: "70%",
+    left:70,
   },
   socialIcon: {
     marginHorizontal: 10,
@@ -195,5 +202,8 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     marginVertical: 10,
      top: "48%",
+  },
+  textItem :{
+  left:70,
   },
 });

@@ -87,7 +87,6 @@ const App = () => {
           <Stack.Screen name="Instagram" component={Instagram} options={{ headerShown: false }} />
           <Stack.Screen name="Twitter" component={Twitter} options={{ headerShown: false }} />
           <Stack.Screen name="Wallet" component={Wallet} options={{ headerShown: false }} />
-
         </Stack.Navigator>
       </NavigationContainer>
       <Toast />
