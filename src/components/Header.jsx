@@ -183,17 +183,17 @@ const styles = StyleSheet.create({
     top: 20,
   },
   socialContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
   },
   iconRow: {
     flexDirection: 'row',
     justifyContent: "center",
     alignItems: 'center',
-    gap: 5,
-    height: "80%",
+    gap: 4,
+    height: "78%",
     width: "70%",
-    left:70,
+    left:0,
   },
   socialIcon: {
     marginHorizontal: 10,
@@ -201,9 +201,10 @@ const styles = StyleSheet.create({
     width: 24,
     resizeMode: 'contain',
     marginVertical: 10,
-     top: "48%",
+     top: "47%",
   },
   textItem :{
-  left:70,
+  right:0,
+  
   },
 });
